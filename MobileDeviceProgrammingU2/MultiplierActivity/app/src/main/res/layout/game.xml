@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:textAlignment="center"
-    android:orientation="vertical">
-
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Multiplication Tables:"
-        android:textSize="35sp"
+        android:text="Guess the number (1–100)"
+        android:textSize="30sp"
         android:textStyle="bold"
         android:layout_gravity="center"
         android:paddingTop="30dp"
@@ -20,19 +16,17 @@
         android:layout_marginBottom="16dp" />
 
     <EditText
-        android:id="@+id/inputNumber"
+        android:id="@+id/inputGuess"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter a number"
-        android:inputType="number"
-        android:paddingBottom="24dp"
-        android:padding="15dp" />
+        android:hint="Enter your guess"
+        android:inputType="number" />
 
     <Button
-        android:id="@+id/btnCalculate"
+        android:id="@+id/btnCheck"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Calculate Table"
+        android:text="Check"
         android:backgroundTint="@color/purple_500"
         android:textColor="@color/white"
         android:textStyle="bold"
@@ -40,31 +34,29 @@
 
     <TextView
         android:id="@+id/resultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_marginTop="12dp" />
+
+    <Button
+        android:id="@+id/btnReset"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:padding="14dp"
-        android:layout_marginTop="16dp" />
-
-    <Button
-        android:id="@+id/btnConverter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Unit Converter"
+        android:text="New Game"
         android:backgroundTint="@color/purple_500"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_marginTop="12dp" />
 
     <Button
-        android:id="@+id/btnGame"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnBack"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/purple_500"
+        android:text="Back to Main"
+        android:backgroundTint="@color/purple_700"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:text="Number Guessing Game"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="24dp" />
 
 </LinearLayout>
-

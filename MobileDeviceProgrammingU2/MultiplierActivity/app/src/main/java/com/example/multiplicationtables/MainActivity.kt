@@ -1,5 +1,6 @@
 package com.example.multiplicationtables
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -37,6 +38,17 @@ class MainActivity : ComponentActivity() {
         inputNumber = findViewById(R.id.inputNumber)
         btnCalculate = findViewById(R.id.btnCalculate)
         resultText = findViewById(R.id.resultText)//Ingresamos las variables del XML
+
+        val btnConverter : Button = findViewById(R.id.btnConverter)
+        val btnGame : Button = findViewById(R.id.btnGame)
+
+        btnConverter.setOnClickListener {
+            startActivity(Intent(this, UnitConversor::class.java))//Ir a actividad de conversion
+        }
+
+        btnGame.setOnClickListener {
+            startActivity(Intent(this, Game::class.java))//Ir a actividad de juego
+        }
         // en variables de la clase.
 
         autoSafe = getSharedPreferences("MyPrefs",MODE_PRIVATE);//Como una base
