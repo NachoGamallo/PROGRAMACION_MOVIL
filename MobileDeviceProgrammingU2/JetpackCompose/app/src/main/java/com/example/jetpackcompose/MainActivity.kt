@@ -70,14 +70,14 @@ fun Greeting(name: String) {
 @Composable
 fun ThirdExercice (){
 
-    var name by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") } //Variables que irán cambiando el contenido según lo que se ingrese por el usuario.
     var text by remember { mutableStateOf("") }
 
     Column (
-        modifier = Modifier.padding(100.dp)
-            .fillMaxWidth()
+        modifier = Modifier.padding(100.dp)//Generamos una columna con padding 100, para estar separado al texto inicial.
+            .fillMaxWidth()//Ocupa todo el width.
     ){
-        Spacer (modifier = Modifier.height(200.dp))
+        Spacer (modifier = Modifier.height(200.dp))//Esto son espacios , para que no este todo el contenido junto.
 
         TextField(
             value = name,
@@ -96,10 +96,10 @@ fun ThirdExercice (){
         Text(
             text = text,
             modifier = Modifier
-                .background(Color.Cyan)
-                .fillMaxWidth()
-                .border(2.dp,Color.Gray)
-                .padding(10.dp)
+                .background(Color.Cyan)//Color del fondo en cyan
+                .fillMaxWidth()//Ocupa todo el espacio
+                .border(2.dp,Color.Gray)//Con un border de 2dp de diametro y de color gris
+                .padding(10.dp)//10 de padding , para que no este el texto junto. 
         )
     }
 
