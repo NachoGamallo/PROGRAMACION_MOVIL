@@ -1,15 +1,22 @@
 package com.example.jetpackcompose3
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
@@ -35,7 +42,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             JetpackCompose3Theme {
 
-                MyApp()
+                MyApp2(modifier = Modifier)
 
         }
     }
@@ -44,27 +51,31 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyApp(modifier: Modifier = Modifier){
 
-    var showOnboarding by remember { mutableStateOf(true) }
+    var shouldShowOnboarding by remember { mutableStateOf(true) }
 
-    Surface (modifier){
-
-        if (showOnboarding) OnboardingScreen(onContinueClicked = { showOnboarding = false }) else Greetings()
-
-    }
+    if (shouldShowOnboarding) OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false }) else Greetings()
 
 }
 
+//EX1
 @Composable
-private fun Greetings(
-    modifier: Modifier = Modifier,
-    names : List<String> = listOf("World","Compose")
-){
+fun OnboardingScreen(onContinueClicked : () -> Unit){
 
-    Column (modifier = modifier.padding(vertical = 4.dp)){
+    Surface( modifier = Modifier.fillMaxSize()) {
 
-        for (name in names){
+        Column (
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
 
-            Greeting(name = name)
+            Text("Welcome to the Basics Codelab!")
+            Spacer(modifier = Modifier.height(24.dp))
+            Button(onClick = onContinueClicked) {
+
+                Text("Continue")
+
+            }
 
         }
 
@@ -72,28 +83,50 @@ private fun Greetings(
 
 }
 
-//1
+
+//Ex1
+@Composable
+private fun Greetings(names : List<String> = listOf("World","Compose")){
+
+    Column (modifier = Modifier.padding(vertical = 4.dp)){
+
+        for (name in names){
+
+            Greeting(name)
+
+        }
+
+    }
+
+}
+
+//Ex1
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun Greeting(name: String) {
 
     var expanded by remember { mutableStateOf(false) }
-    val extraPadding = if (expanded) 48.dp else 0.dp
 
     Surface (
-        color = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.padding( vertical = 4.dp , horizontal = 8.dp)
+        color = MaterialTheme.colorScheme.primaryContainer,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
 
         Row ( modifier = Modifier.padding(24.dp)) {
 
-            Column ( modifier = Modifier.weight(1f)) {
+            Column ( modifier = Modifier
+                .weight(1f)
+                .padding(end = 8.dp)) {
 
-                Text("Hello")
-                Text(text = name)
+                Text("Hello, $name!")
+
+                if (expanded) Text("This is some extra details")
 
             }
-            ElevatedButton( onClick = { expanded = !expanded } ) {
+
+            ElevatedButton( onClick = { expanded = !expanded }) {
 
                 Text( if (expanded) "Show less" else "Show more")
 
@@ -105,32 +138,88 @@ fun Greeting(name: String) {
 
 }
 
-//2
+
+
+
+
+
+
+
+
+
+
+
+
+//Ex2
 @Composable
-fun OnboardingScreen(
-    modifier: Modifier = Modifier,
-    onContinueClicked : () -> Unit
-){
+fun MyApp2(modifier: Modifier){
 
-    var showOnboarding by remember { mutableStateOf(true) }
+    Items()
 
-    Column (
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
+}
 
-        Text("Welcome to the Basics Codelab!")
-        Button(
-            modifier = Modifier.padding( vertical = 24.dp),
-            onClick = onContinueClicked
+@Composable
+fun Items (){
+
+    Column ( modifier = Modifier.fillMaxSize()){
+
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .padding(8.dp)
         ) {
 
-            Text("Continue")
+            Column(
+                modifier = Modifier.weight(0.7f)
+
+            ) {
+
+                Text(text = "Onbording Ui")
+                Text("El estoicismo es una filosofía griega fundada por Zenón de Citio en el siglo III a.C. que enseña a vivir una vida de virtud y serenidad, enfocándose en lo que se puede controlar y aceptando lo que no")
+
+            }
+
+            Column(
+                modifier = Modifier.weight(0.3f)
+            ) {
+
+                Text("Expand")
+                Text("This buttom will expand for get a little bit more of info.")
+                Button(onClick = {  },
+                    modifier = Modifier.background(Color.CYAN)) {
+                    Text(text = "Expand")
+                }
+
+            }
 
         }
 
     }
+    
+}
+
+@Composable
+fun ItemBox() {
+
+
+        Column(
+            //modifier = Modifier.weight(0.25f)
+        ) {
+
+            Text("Expand")
+            Text("This buttom will expand for get a little bit more of info.")
+            Button(onClick = { }) {
+                Text("Expand")
+            }
+
+        }
+
+
+}
+
+@Composable
+fun OnboardingScreen2(){
+
+
 
 }
 
@@ -138,6 +227,6 @@ fun OnboardingScreen(
 @Composable
 fun GreetingPreview() {
     JetpackCompose3Theme {
-        MyApp(Modifier.fillMaxSize())
+        MyApp2(Modifier.fillMaxSize())
     }
 }
