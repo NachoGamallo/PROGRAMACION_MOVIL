@@ -238,7 +238,7 @@ fun Items2() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Filas como diseño final
+        // Filas como diseño.
         ItemCirclesRow()
         ItemCirclesRow()
         ItemBoxRow()
@@ -261,89 +261,17 @@ fun Items2() {
 }
 
 @Composable
-fun Items (){
-
-    Column ( modifier = Modifier.fillMaxSize()){
-
-        Row(
-            modifier = Modifier.fillMaxWidth()
-                .padding(8.dp)
-        ) {
-
-            Column(
-                modifier = Modifier.weight(0.7f)
-                    .padding(8.dp)
-
-            ) {
-
-                Text(text = "Onbording Ui",
-                    fontSize = 28.sp)
-                Text("El estoicismo es una filosofía griega fundada por Zenón de Citio.")
-
-            }
-
-            Column(
-                modifier = Modifier.weight(0.3f)
-            ) {
-
-                Text("Expand",
-                    fontSize = 20.sp)
-                Text("This buttom will expand.")
-                Button(onClick = {  }) {
-                    Text(text = "Expand")
-                }
-
-            }
-
-        }
-
-        ItemCircles()
-        ItemCircles()
-        ItemBoxes()
-        ItemBoxes()
-
-        Row(
-            modifier = Modifier.fillMaxWidth()
-                .padding(8.dp)
-        ) {
-
-            Box(
-                modifier = Modifier.size(75.dp)
-                    .border(2.dp,
-                        Black,
-                        CircleShape)
-                    .padding(20.dp)
-            )
-
-            Column(
-                modifier = Modifier.weight(0.8f)
-            ) {
-
-                Text("Onboarding Steam",
-                    fontSize = 28.sp)
-                Text("El onboarding es una herramienta muy util para lo que la usamos.")
-
-            }
-
-        }
-
-
-    }
-    
-}
-
-@Composable
 fun ItemCard(){
 
     var expanded by rememberSaveable { mutableStateOf(false) }
 
     Card(
         modifier = Modifier
-            .width(110.dp)
-            .height(if (expanded) 150.dp else 110.dp)
+            .width(130.dp)
+            .height(if (expanded) 150.dp else 120.dp)
             .padding(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = androidx.compose.ui.graphics.Color.Blue // azul clarito
+            containerColor = androidx.compose.ui.graphics.Color.Blue
         ),
         shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(8.dp)
@@ -360,7 +288,7 @@ fun ItemCard(){
             Text(
                 text = "Expand",
                 fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
+                fontSize = 14.sp
             )
 
             if (expanded) {
@@ -374,7 +302,7 @@ fun ItemCard(){
             Button(
                 onClick = { expanded = !expanded },
                 shape = RoundedCornerShape(50),
-                modifier = Modifier.height(28.dp)
+                modifier = Modifier.height(32.dp)
             ) {
                 Text(
                     text = if (expanded) "Hide" else "Expand",
@@ -394,7 +322,8 @@ fun CircleItem(icon: ImageVector) {
             .size(75.dp)
             .background(color = androidx.compose.ui.graphics.Color.Black , shape = CircleShape)
             .border(4.dp, color = androidx.compose.ui.graphics.Color.White ,CircleShape)
-            .shadow(8.dp, CircleShape),
+            .shadow(8.dp, CircleShape)
+            .size(32.dp),
         contentAlignment = Alignment.Center
     ) {
         Icon(
@@ -450,88 +379,12 @@ fun ItemBoxRow() {
 }
 
 
-@Composable
-fun ItemCircles() {
-
-    Row(
-        modifier = Modifier.fillMaxWidth()
-            .padding(8.dp)
-    ) {
-
-        Column(
-            modifier = Modifier.weight(0.7f)
-                .padding(8.dp)
-
-        ) {
-
-            Row (modifier = Modifier.fillMaxWidth()
-                .border(1.dp,Black),
-                horizontalArrangement = Arrangement.SpaceBetween,) {
-
-                repeat(3){
-
-                    Box(
-                        modifier = Modifier.size(75.dp)
-                            .border(2.dp,
-                                Black,
-                                CircleShape)
-                            .padding(20.dp)
-                    )
-
-                }
-
-            }
-
-        }
-
-        Column(
-            modifier = Modifier.weight(0.3f)
-        ) {
-
-            Text("Expand",
-                fontSize = 20.sp)
-            Text("This buttom will expand.")
-            Button(onClick = {  }) {
-                Text(text = "Expand")
-            }
-
-        }
-
-    }
-
-}
-
-@Composable
-fun ItemBoxes(){
-
-    Row(modifier = Modifier.fillMaxWidth()
-        .padding(8.dp)){
-
-        repeat(3){
-
-            Column(
-                modifier = Modifier.weight(0.3f)
-            ) {
-
-                Text("Expand",
-                    fontSize = 20.sp)
-                Text("This buttom will expand.")
-                Button(onClick = {  }) {
-                    Text(text = "Expand")
-                }
-
-            }
-
-        }
-
-    }
-
-}
-
 @Preview(showBackground = true, widthDp = 320)
 @Composable
 fun GreetingPreview() {
     JetpackCompose3Theme {
-        MyApp2(Modifier.fillMaxSize())
+
+        MyApp(Modifier.fillMaxSize())
+
     }
 }
