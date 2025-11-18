@@ -9,9 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -41,7 +39,7 @@ fun NumbersScreen (
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        // *** Pantalla de número temporal ***
+        // *** Pantalla de numero temporal ***
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -87,7 +85,7 @@ fun NumbersScreen (
                 }
             }
 
-            // *** NUEVO BOTÓN GENERAR ***
+            // *** NUEVO BOTON GENERAR ***
             Button(
                 onClick = { viewModel.addNumber() },
                 modifier = Modifier
@@ -98,7 +96,7 @@ fun NumbersScreen (
                 Text("GENERAR", fontSize = 18.sp)
             }
 
-            // *** BOTÓN BORRAR ***
+            // *** BOTON BORRAR ***
             Button(
                 onClick = { viewModel.deleteDigit() },
                 modifier = Modifier
@@ -111,7 +109,7 @@ fun NumbersScreen (
 
         Spacer(Modifier.height(20.dp))
 
-        // *** LISTA DE NÚMEROS INGRESADOS ***
+        // *** LISTA DE NUMEROS INGRESADOS ***
         Card(
             modifier = Modifier
                 .fillMaxWidth()
