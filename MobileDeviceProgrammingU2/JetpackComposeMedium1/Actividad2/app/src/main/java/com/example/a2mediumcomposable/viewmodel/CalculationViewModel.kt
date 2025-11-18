@@ -12,6 +12,9 @@ class CalculatorViewModel : ViewModel() {
     var selectedOperation by mutableStateOf<String?>(null)
         private set
 
+    var currentInput by mutableStateOf("")
+
+
     // Lista de números ingresados por el usuario
     // Esta es una lista mutable, NO necesita .value, se usa como una lista normal.
     val numberList = mutableStateListOf<Int>()
@@ -28,8 +31,29 @@ class CalculatorViewModel : ViewModel() {
         result = null
     }
 
+    fun addDigit(digit : Int){
+
+        currentInput += digit.toString()
+
+    }
+
+    fun deleteDigit(){
+        if (currentInput.isNotEmpty()){
+            currentInput = currentInput.dropLast(1)
+        }
+    }
+
     // Función para añadir un número a la lista
-    fun addNumber(number: Int) { numberList.add(number) }
+    fun addNumber() {
+
+        if (currentInput.isNotEmpty()){
+
+            numberList.add(currentInput.toInt())
+            currentInput = ""
+
+        }
+
+    }
 
     // Función para eliminar el último número
     fun deleteLastNumber() { if (numberList.isNotEmpty()) numberList.removeAt(numberList.lastIndex) }

@@ -50,7 +50,7 @@ fun OperationsScreen (
         )
 
         Row(
-            modifier = Modifier.fillMaxWidth(0.8f),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             operations.forEach { op ->
@@ -64,7 +64,7 @@ fun OperationsScreen (
                         .padding(4.dp),
                     shape = MaterialTheme.shapes.extraLarge,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                        containerColor = MaterialTheme.colorScheme.secondary
                     )
                 ) {
                     Text(text = op, fontSize = 32.sp, fontWeight = FontWeight.Black)

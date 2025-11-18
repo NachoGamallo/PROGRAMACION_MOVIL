@@ -14,7 +14,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,12 +29,9 @@ import com.example.a2mediumcomposable.viewmodel.CalculatorViewModel
 
 @Composable
 fun NumbersScreen (
-
     navController: NavController,
     viewModel: CalculatorViewModel
-
 ){
-    // *** Usando DataSource ***
     val numbers = DataSource.listOfNumbers
 
     Column(
@@ -44,17 +40,29 @@ fun NumbersScreen (
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Título con la operación seleccionada
-        Text(
-            text = "Operación: ${viewModel.selectedOperation ?: "?"}",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(top = 20.dp, bottom = 16.dp),
-            color = MaterialTheme.colorScheme.secondary
-        )
 
-        // Teclado Numérico (Grid de 3x4)
+        // *** Pantalla de número temporal ***
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
+            )
+        ) {
+            Text(
+                text = if (viewModel.currentInput.isEmpty()) "—"
+                else viewModel.currentInput,
+                fontSize = 40.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .padding(20.dp)
+            )
+        }
+
+        // *** TECLADO ***
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
             numbers.chunked(3).forEach { rowNumbers ->
                 Row(
                     horizontalArrangement = Arrangement.Center,
@@ -62,69 +70,62 @@ fun NumbersScreen (
                 ) {
                     rowNumbers.forEach { number ->
                         Button(
-                            onClick = { viewModel.addNumber(number) },
+                            onClick = { viewModel.addDigit(number) },
                             modifier = Modifier
                                 .weight(1f)
                                 .padding(4.dp)
                                 .aspectRatio(1f),
-                            shape = MaterialTheme.shapes.medium
                         ) {
                             Text(text = number.toString(), fontSize = 24.sp)
                         }
                     }
-                    // Espacio para la columna restante en la última fila si es necesario
                     if (rowNumbers.size < 3) {
                         repeat(3 - rowNumbers.size) {
-                            Spacer(modifier = Modifier.weight(1f).padding(4.dp))
+                            Spacer(Modifier.weight(1f).padding(4.dp))
                         }
                     }
                 }
             }
 
-            // Botón de Borrar (DELETE)
+            // *** NUEVO BOTÓN GENERAR ***
             Button(
-                onClick = { viewModel.deleteLastNumber() },
+                onClick = { viewModel.addNumber() },
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
-                    .padding(vertical = 8.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.errorContainer,
-                    contentColor = MaterialTheme.colorScheme.onErrorContainer
-                )
+                    .padding(top = 8.dp),
+                enabled = viewModel.currentInput.isNotEmpty()
             ) {
-                Spacer(Modifier.width(8.dp))
+                Text("GENERAR", fontSize = 18.sp)
+            }
+
+            // *** BOTÓN BORRAR ***
+            Button(
+                onClick = { viewModel.deleteDigit() },
+                modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .padding(vertical = 8.dp)
+            ) {
                 Text("BORRAR", fontSize = 18.sp)
             }
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(Modifier.height(20.dp))
 
-        // Área de visualización de la lista de números
+        // *** LISTA DE NÚMEROS INGRESADOS ***
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
         ) {
-            Column(modifier = Modifier.padding(12.dp)) {
-                Text(
-                    text = "Números Ingresados:",
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 18.sp,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
+            Row(modifier = Modifier.padding(12.dp)) {
+                Text("Números Ingresados:", fontWeight = FontWeight.SemiBold)
 
-                // Muestra la lista como una cadena legible
-                val numbersDisplay = viewModel.numberList.joinToString(separator = ", ")
-                Text(
-                    text = if (numbersDisplay.isEmpty()) "(Vacío)" else numbersDisplay,
-                    fontSize = 16.sp,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
+                val numbersDisplay = viewModel.numberList.joinToString(", ")
+                Text(text = if (numbersDisplay.isEmpty()) "(Vacío)" else numbersDisplay)
             }
         }
 
-        // Botón para enviar y calcular (Navegar a Pantalla 3)
+        // *** BOTÓN FINAL CALCULAR ***
         Button(
             onClick = {
                 viewModel.calculateResult()
@@ -132,12 +133,11 @@ fun NumbersScreen (
             },
             modifier = Modifier
                 .fillMaxWidth(0.9f)
-                .padding(vertical = 16.dp)
-                .height(56.dp),
-            enabled = viewModel.numberList.isNotEmpty(),
-            shape = MaterialTheme.shapes.large
+                .padding(vertical = 16.dp),
+            enabled = viewModel.numberList.isNotEmpty()
         ) {
-            Text("CALCULAR Y ENVIAR", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Text("CALCULAR Y ENVIAR", fontSize = 18.sp)
         }
     }
 }
+
