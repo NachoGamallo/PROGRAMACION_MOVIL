@@ -51,30 +51,6 @@ import com.example.cupcake.ui.theme.CupcakeTheme
 /**
  * Composable that displays the topBar and displays back button if back navigation is possible.
  */
-@Composable
-fun CupcakeAppBar(
-    canNavigateBack: Boolean,
-    navigateUp: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    TopAppBar(
-        title = { Text(stringResource(id = R.string.app_name)) },
-        colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
-        ),
-        modifier = modifier,
-        navigationIcon = {
-            if (canNavigateBack) {
-                IconButton(onClick = navigateUp) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.back_button)
-                    )
-                }
-            }
-        }
-    )
-}
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable

@@ -92,12 +92,17 @@ class OrderViewModel : ViewModel() {
         quantity: Int = _uiState.value.quantity,
         pickupDate: String = _uiState.value.date
     ): String {
+
         var calculatedPrice = quantity * PRICE_PER_CUPCAKE
         // If the user selected the first option (today) for pickup, add the surcharge
         if (pickupOptions()[0] == pickupDate) {
+
             calculatedPrice += PRICE_FOR_SAME_DAY_PICKUP
+
         }
+
         val formattedPrice = NumberFormat.getCurrencyInstance().format(calculatedPrice)
+
         return formattedPrice
     }
 
@@ -113,6 +118,7 @@ class OrderViewModel : ViewModel() {
             dateOptions.add(formatter.format(calendar.time))
             calendar.add(Calendar.DATE, 1)
         }
+
         return dateOptions
     }
 }
