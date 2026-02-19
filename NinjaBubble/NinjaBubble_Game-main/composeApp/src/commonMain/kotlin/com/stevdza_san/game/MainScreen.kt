@@ -36,7 +36,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.stevdza_san.game.domain.Game
@@ -351,7 +350,6 @@ fun MainScreen() {
                         speedBoost = 1f //Porque ya no tienes boost , has perdido.
                         shieldTimer = 0 //Porque ya no tienes boost de escudo.
                         isShieldActive = false
-
 
                     }
                 }
