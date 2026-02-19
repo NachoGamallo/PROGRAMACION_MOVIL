@@ -61,8 +61,6 @@ fun App() {
 
         val scaleFactor = (game.beeRadius * 3f) / 360f //Para dibujar el tucán en su tamaño real
 
-        val spriteState = rememberSpriteState(totalFrames = 9, framesPerRow = 3)
-
         // El SpriteSpec debe observar screenWidth para recrearse si cambia
         val spriteSpec = remember { // Eliminamos la dependencia de screenWidth para evitar parpadeos
             SpriteSpec(
