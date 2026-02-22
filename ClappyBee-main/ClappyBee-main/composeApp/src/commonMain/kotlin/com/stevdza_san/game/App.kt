@@ -58,9 +58,6 @@ fun App() {
     MaterialTheme {
         val platform = remember { getPlatform() }
         val game = remember { Game(platform = platform) }
-
-        val scaleFactor = (game.beeRadius * 3f) / 360f //Para dibujar el tucán en su tamaño real
-
         val spriteState = rememberSpriteState(totalFrames = 9, framesPerRow = 3)
 
         // El SpriteSpec debe observar screenWidth para recrearse si cambia
@@ -68,7 +65,7 @@ fun App() {
             SpriteSpec(
                 screenWidth = 2000f, // Un valor base alto para que no recorte por ancho
                 default = SpriteSheet(
-                    frameWidth = 360,   // Tamaño real de tu tucan.png
+                    frameWidth = 360,
                     frameHeight = 360,
                     image = Res.drawable.tucan
                 )
@@ -197,7 +194,7 @@ fun App() {
                         )
                     }
 
-                    // 3. PERSONAJE (Solo si bee tiene posición válida)
+                    // 3. PERSONAJE
                     rotate(degrees = animatedAngle, pivot = Offset(x = game.bee.x, y = game.bee.y)) {
                         if (game.isRainbowActive) {
                             drawCircle(
