@@ -58,7 +58,12 @@ fun App() {
     MaterialTheme {
         val platform = remember { getPlatform() }
         val game = remember { Game(platform = platform) }
+<<<<<<< HEAD
         val spriteState = rememberSpriteState(totalFrames = 9, framesPerRow = 3)
+=======
+
+        val scaleFactor = (game.beeRadius * 3f) / 360f //Para dibujar el tucán en su tamaño real
+>>>>>>> 1b9ac53c5ebb2672e069e90cd0eccc9cec8bb5df
 
         // El SpriteSpec debe observar screenWidth para recrearse si cambia
         val spriteSpec = remember { // Eliminamos la dependencia de screenWidth para evitar parpadeos
