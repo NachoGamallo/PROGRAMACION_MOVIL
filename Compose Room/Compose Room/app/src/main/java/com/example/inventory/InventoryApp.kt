@@ -16,8 +16,10 @@
 
 package com.example.inventory
 
-import androidx.compose.material.icons.Icons.Filled
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -29,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.inventory.R.string
 import com.example.inventory.ui.navigation.InventoryNavHost
 
 /**
@@ -49,6 +50,9 @@ fun InventoryTopAppBar(
     title: String,
     canNavigateBack: Boolean,
     modifier: Modifier = Modifier,
+    // Estos valores por defecto evitan que las otras pantallas den error
+    useFileStorage: Boolean = false,
+    onToggleStorage: (() -> Unit)? = null,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     navigateUp: () -> Unit = {}
 ) {
@@ -60,8 +64,19 @@ fun InventoryTopAppBar(
             if (canNavigateBack) {
                 IconButton(onClick = navigateUp) {
                     Icon(
-                        imageVector = Filled.ArrowBack,
-                        contentDescription = stringResource(string.back_button)
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.back_button)
+                    )
+                }
+            }
+        },
+        actions = {
+            // Solo dibujamos el botón si pasamos una función (solo en HomeScreen)
+            if (onToggleStorage != null) {
+                IconButton(onClick = onToggleStorage) {
+                    Icon(
+                        imageVector = if (useFileStorage) Icons.Filled.DateRange else Icons.Filled.Home,
+                        contentDescription = "Toggle Storage"
                     )
                 }
             }

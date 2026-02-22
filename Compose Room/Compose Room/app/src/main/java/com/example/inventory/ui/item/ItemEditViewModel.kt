@@ -1,47 +1,30 @@
-/*
- * Copyright (C) 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.inventory.ui.item
 
+import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.inventory.data.ItemsRepository
+import com.example.inventory.ui.navigation.StorageGlobals
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import java.io.File
 
-/**
- * ViewModel to retrieve and update an item from the [ItemsRepository]'s data source.
- */
 class ItemEditViewModel(
     savedStateHandle: SavedStateHandle,
-    private val itemsRepository: ItemsRepository
-) : ViewModel() {
+    private val itemsRepository: ItemsRepository,
+    application: Application
+) : AndroidViewModel(application) {
 
-    /**
-     * Holds current item ui state
-     */
     var itemUiState by mutableStateOf(ItemUiState())
         private set
 
     private val itemId: Int = checkNotNull(savedStateHandle[ItemEditDestination.itemIdArg])
+    private val file = File(getApplication<Application>().filesDir, "inventory_data.txt")
 
     init {
         viewModelScope.launch {
@@ -52,19 +35,33 @@ class ItemEditViewModel(
         }
     }
 
-    /**
-     * Update the item in the [ItemsRepository]'s data source
-     */
-    suspend fun updateItem() {
+    suspend fun updateItem(value: Boolean) {
         if (validateInput(itemUiState.itemDetails)) {
-            itemsRepository.updateItem(itemUiState.itemDetails.toItem())
+            if (StorageGlobals.isFileMode.value) {
+                // Actualizar en Archivo
+                updateItemInFile(itemUiState.itemDetails)
+            } else {
+                // Actualizar en Base de Datos
+                itemsRepository.updateItem(itemUiState.itemDetails.toItem())
+            }
         }
     }
 
-    /**
-     * Updates the [itemUiState] with the value provided in the argument. This method also triggers
-     * a validation for input values.
-     */
+    private fun updateItemInFile(details: ItemDetails) {
+        if (file.exists()) {
+            val lines = file.readLines()
+            val updatedLines = lines.map { line ->
+                val id = line.split("|").firstOrNull()?.toIntOrNull()
+                if (id == itemId) {
+                    "${details.id}|${details.name}|${details.price}|${details.quantity}"
+                } else {
+                    line
+                }
+            }
+            file.writeText(updatedLines.joinToString("\n") + "\n")
+        }
+    }
+
     fun updateUiState(itemDetails: ItemDetails) {
         itemUiState =
             ItemUiState(itemDetails = itemDetails, isEntryValid = validateInput(itemDetails))

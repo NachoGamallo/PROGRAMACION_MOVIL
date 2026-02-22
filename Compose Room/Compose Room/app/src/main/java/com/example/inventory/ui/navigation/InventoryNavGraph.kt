@@ -17,6 +17,7 @@
 package com.example.inventory.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -35,6 +36,9 @@ import com.example.inventory.ui.item.ItemEntryScreen
 /**
  * Provides Navigation graph for the application.
  */
+
+object StorageGlobals{ val isFileMode = mutableStateOf(false) }
+
 @Composable
 fun InventoryNavHost(
     navController: NavHostController,

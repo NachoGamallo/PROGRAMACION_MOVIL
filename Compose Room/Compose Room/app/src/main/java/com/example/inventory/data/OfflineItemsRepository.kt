@@ -19,7 +19,11 @@ package com.example.inventory.data
 import kotlinx.coroutines.flow.Flow
 
 class OfflineItemsRepository(private val itemDao: ItemDao) : ItemsRepository {
-    override fun getAllItemsStream(): Flow<List<Item>> = itemDao.getAllItems()
+    override fun toggleStorageMode() {
+        TODO("Not yet implemented")
+    }
+
+    override fun getAllItemsStream(useFile: Boolean): Flow<List<Item>> = itemDao.getAllItems()
 
     override fun getItemStream(id: Int): Flow<Item?> = itemDao.getItem(id)
 
@@ -28,4 +32,7 @@ class OfflineItemsRepository(private val itemDao: ItemDao) : ItemsRepository {
     override suspend fun deleteItem(item: Item) = itemDao.delete(item)
 
     override suspend fun updateItem(item: Item) = itemDao.update(item)
+    override fun saveEntireList(allItems: List<Item>) {
+        TODO("Not yet implemented")
+    }
 }

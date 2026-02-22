@@ -23,9 +23,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.inventory.ui.theme.InventoryTheme
+import java.io.File
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val file = File(applicationContext.filesDir, "items.json")
+        if (file.exists()) {
+            file.delete()
+        }
+
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
